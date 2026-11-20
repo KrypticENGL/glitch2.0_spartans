@@ -1,0 +1,1300 @@
+{
+ "provenance": {
+  "roads": "OpenStreetMap via Overpass API (ODbL); raw extract in osm-darbhanga.json",
+  "everythingElse": "SIMULATED for demonstration; mirrors the frontend demo scenario (src/data/mock).",
+  "floodZones": "Synthetic circular zones; NOT hydrological or observed flood data."
+ },
+ "demoOrigin": {
+  "label": "Darbhanga Town (demo citizen location)",
+  "location": [
+   85.896217,
+   26.154152
+  ]
+ },
+ "floodZones": [
+  {
+   "name": "Donar low-lying wards",
+   "center": [
+    85.884,
+    26.14
+   ],
+   "radiusMeters": 900,
+   "peakRisk": 80
+  },
+  {
+   "name": "Laheriasarai south",
+   "center": [
+    85.905,
+    26.124
+   ],
+   "radiusMeters": 800,
+   "peakRisk": 70
+  },
+  {
+   "name": "Shubhankarpur west (Bagmati side)",
+   "center": [
+    85.866,
+    26.15
+   ],
+   "radiusMeters": 700,
+   "peakRisk": 65
+  },
+  {
+   "name": "Kadirabad drain",
+   "center": [
+    85.912,
+    26.158
+   ],
+   "radiusMeters": 450,
+   "peakRisk": 45
+  },
+  {
+   "name": "Mabbi embankment",
+   "center": [
+    85.93,
+    26.118
+   ],
+   "radiusMeters": 700,
+   "peakRisk": 60
+  }
+ ],
+ "roadClosures": [
+  {
+   "name": "Laheriasarai road underpass",
+   "status": "blocked",
+   "hazardType": "flooding",
+   "severity": "severe",
+   "note": "Underpass submerged; closed to all traffic.",
+   "path": [
+    [
+     85.908013,
+     26.143549
+    ],
+    [
+     85.907985,
+     26.143142
+    ],
+    [
+     85.907971,
+     26.142922
+    ],
+    [
+     85.907971,
+     26.142849
+    ],
+    [
+     85.907974,
+     26.142336
+    ],
+    [
+     85.90799,
+     26.142167
+    ],
+    [
+     85.908035,
+     26.141689
+    ],
+    [
+     85.90809,
+     26.140777
+    ],
+    [
+     85.90809,
+     26.140717
+    ],
+    [
+     85.908092,
+     26.140149
+    ],
+    [
+     85.908093,
+     26.140116
+    ],
+    [
+     85.908093,
+     26.139648
+    ],
+    [
+     85.908095,
+     26.139526
+    ],
+    [
+     85.908097,
+     26.139347
+    ],
+    [
+     85.908095,
+     26.138934
+    ],
+    [
+     85.908092,
+     26.138531
+    ],
+    [
+     85.908092,
+     26.138502
+    ],
+    [
+     85.908092,
+     26.138385
+    ],
+    [
+     85.908091,
+     26.13824
+    ],
+    [
+     85.908089,
+     26.137989
+    ],
+    [
+     85.908088,
+     26.137813
+    ],
+    [
+     85.908065,
+     26.137506
+    ],
+    [
+     85.908045,
+     26.137159
+    ],
+    [
+     85.908021,
+     26.136495
+    ],
+    [
+     85.908029,
+     26.136272
+    ],
+    [
+     85.908032,
+     26.13625
+    ],
+    [
+     85.908038,
+     26.136079
+    ],
+    [
+     85.908049,
+     26.135734
+    ],
+    [
+     85.90805,
+     26.135481
+    ],
+    [
+     85.908051,
+     26.135025
+    ]
+   ]
+  },
+  {
+   "name": "Donar link road",
+   "status": "blocked",
+   "hazardType": "waterlogging",
+   "severity": "severe",
+   "note": "Water above 60 cm reported by field team.",
+   "path": [
+    [
+     85.891811,
+     26.154273
+    ],
+    [
+     85.89176,
+     26.154274
+    ],
+    [
+     85.891711,
+     26.154288
+    ],
+    [
+     85.891668,
+     26.154314
+    ],
+    [
+     85.891599,
+     26.154038
+    ],
+    [
+     85.891492,
+     26.153373
+    ],
+    [
+     85.891442,
+     26.153059
+    ],
+    [
+     85.891393,
+     26.152776
+    ],
+    [
+     85.89128,
+     26.152266
+    ],
+    [
+     85.891191,
+     26.151796
+    ],
+    [
+     85.891144,
+     26.151263
+    ],
+    [
+     85.891218,
+     26.150761
+    ],
+    [
+     85.89123,
+     26.150596
+    ],
+    [
+     85.891237,
+     26.150529
+    ],
+    [
+     85.891385,
+     26.149522
+    ],
+    [
+     85.891378,
+     26.149342
+    ],
+    [
+     85.891291,
+     26.149034
+    ],
+    [
+     85.891261,
+     26.148669
+    ],
+    [
+     85.891563,
+     26.147999
+    ],
+    [
+     85.891274,
+     26.147857
+    ],
+    [
+     85.891172,
+     26.147796
+    ],
+    [
+     85.890997,
+     26.147666
+    ],
+    [
+     85.890936,
+     26.147626
+    ],
+    [
+     85.890802,
+     26.147557
+    ],
+    [
+     85.890019,
+     26.147338
+    ],
+    [
+     85.889919,
+     26.147251
+    ],
+    [
+     85.889838,
+     26.147184
+    ],
+    [
+     85.889779,
+     26.147161
+    ],
+    [
+     85.889717,
+     26.147148
+    ],
+    [
+     85.889556,
+     26.147135
+    ],
+    [
+     85.889364,
+     26.14715
+    ],
+    [
+     85.889185,
+     26.147158
+    ],
+    [
+     85.889006,
+     26.147167
+    ],
+    [
+     85.888852,
+     26.147183
+    ],
+    [
+     85.888725,
+     26.1472
+    ]
+   ]
+  },
+  {
+   "name": "Kadirabad approach",
+   "status": "restricted",
+   "hazardType": "waterlogging",
+   "severity": "moderate",
+   "note": "Shallow water (about 30 cm); slow vehicles only.",
+   "path": [
+    [
+     85.898567,
+     26.158661
+    ],
+    [
+     85.899578,
+     26.158674
+    ],
+    [
+     85.89984,
+     26.158696
+    ],
+    [
+     85.900669,
+     26.158946
+    ],
+    [
+     85.900804,
+     26.158982
+    ],
+    [
+     85.900869,
+     26.159017
+    ],
+    [
+     85.900921,
+     26.159073
+    ],
+    [
+     85.901003,
+     26.159191
+    ],
+    [
+     85.901641,
+     26.160246
+    ],
+    [
+     85.902277,
+     26.161864
+    ],
+    [
+     85.90249,
+     26.161835
+    ],
+    [
+     85.902574,
+     26.16183
+    ],
+    [
+     85.902631,
+     26.161829
+    ],
+    [
+     85.902913,
+     26.161827
+    ],
+    [
+     85.903552,
+     26.161794
+    ],
+    [
+     85.903912,
+     26.161784
+    ],
+    [
+     85.904178,
+     26.161765
+    ],
+    [
+     85.904457,
+     26.161746
+    ],
+    [
+     85.904917,
+     26.161731
+    ],
+    [
+     85.905235,
+     26.16171
+    ],
+    [
+     85.905534,
+     26.161689
+    ]
+   ]
+  },
+  {
+   "name": "Mabbi bypass",
+   "status": "blocked",
+   "hazardType": "road_damage",
+   "severity": "severe",
+   "note": "Embankment breach; road surface washed out.",
+   "path": [
+    [
+     85.910995,
+     26.13542
+    ],
+    [
+     85.911057,
+     26.135369
+    ],
+    [
+     85.911104,
+     26.13533
+    ],
+    [
+     85.911745,
+     26.134741
+    ],
+    [
+     85.911923,
+     26.134601
+    ],
+    [
+     85.912174,
+     26.134442
+    ],
+    [
+     85.912353,
+     26.134342
+    ],
+    [
+     85.912556,
+     26.134232
+    ],
+    [
+     85.912759,
+     26.134115
+    ],
+    [
+     85.91369,
+     26.13346
+    ],
+    [
+     85.914095,
+     26.133129
+    ],
+    [
+     85.914224,
+     26.132994
+    ],
+    [
+     85.914347,
+     26.132824
+    ],
+    [
+     85.914623,
+     26.132299
+    ],
+    [
+     85.914689,
+     26.132182
+    ],
+    [
+     85.914769,
+     26.132069
+    ],
+    [
+     85.914855,
+     26.131956
+    ],
+    [
+     85.914946,
+     26.131851
+    ],
+    [
+     85.915432,
+     26.131293
+    ],
+    [
+     85.915495,
+     26.131213
+    ],
+    [
+     85.91558,
+     26.131039
+    ],
+    [
+     85.915638,
+     26.130946
+    ],
+    [
+     85.915785,
+     26.130692
+    ],
+    [
+     85.91596,
+     26.130326
+    ],
+    [
+     85.916083,
+     26.130097
+    ],
+    [
+     85.916185,
+     26.129943
+    ],
+    [
+     85.916312,
+     26.129778
+    ],
+    [
+     85.916436,
+     26.129596
+    ],
+    [
+     85.91656,
+     26.129447
+    ],
+    [
+     85.916693,
+     26.129321
+    ],
+    [
+     85.916874,
+     26.129194
+    ],
+    [
+     85.917342,
+     26.128938
+    ],
+    [
+     85.917542,
+     26.128775
+    ],
+    [
+     85.917692,
+     26.128582
+    ],
+    [
+     85.91801,
+     26.128168
+    ],
+    [
+     85.918452,
+     26.127448
+    ],
+    [
+     85.918636,
+     26.127211
+    ],
+    [
+     85.918846,
+     26.126999
+    ],
+    [
+     85.919157,
+     26.126769
+    ],
+    [
+     85.919401,
+     26.126587
+    ],
+    [
+     85.919473,
+     26.126532
+    ],
+    [
+     85.91953,
+     26.126478
+    ],
+    [
+     85.920111,
+     26.125848
+    ],
+    [
+     85.920242,
+     26.125628
+    ],
+    [
+     85.920256,
+     26.125566
+    ],
+    [
+     85.920279,
+     26.125464
+    ],
+    [
+     85.920292,
+     26.125407
+    ],
+    [
+     85.920339,
+     26.125186
+    ],
+    [
+     85.920427,
+     26.124875
+    ],
+    [
+     85.920576,
+     26.124559
+    ],
+    [
+     85.920686,
+     26.124367
+    ],
+    [
+     85.920739,
+     26.124277
+    ]
+   ]
+  },
+  {
+   "name": "Shubhankarpur lane",
+   "status": "unknown",
+   "hazardType": "fallen_tree",
+   "severity": "moderate",
+   "note": "Debris reported; condition not yet confirmed.",
+   "path": [
+    [
+     85.889318,
+     26.15383
+    ],
+    [
+     85.889245,
+     26.15367
+    ],
+    [
+     85.889161,
+     26.153412
+    ],
+    [
+     85.888882,
+     26.153411
+    ],
+    [
+     85.888533,
+     26.153469
+    ],
+    [
+     85.888392,
+     26.153578
+    ],
+    [
+     85.888077,
+     26.15382
+    ],
+    [
+     85.887895,
+     26.153936
+    ],
+    [
+     85.887592,
+     26.153729
+    ],
+    [
+     85.887272,
+     26.153493
+    ],
+    [
+     85.887079,
+     26.15336
+    ],
+    [
+     85.886706,
+     26.153151
+    ],
+    [
+     85.886681,
+     26.153143
+    ],
+    [
+     85.886657,
+     26.15314
+    ],
+    [
+     85.886627,
+     26.153146
+    ],
+    [
+     85.885803,
+     26.153343
+    ],
+    [
+     85.885757,
+     26.153371
+    ],
+    [
+     85.885726,
+     26.153404
+    ],
+    [
+     85.88545,
+     26.15336
+    ],
+    [
+     85.885225,
+     26.15334
+    ],
+    [
+     85.885052,
+     26.153339
+    ],
+    [
+     85.885015,
+     26.153345
+    ],
+    [
+     85.884978,
+     26.153363
+    ],
+    [
+     85.884813,
+     26.153192
+    ],
+    [
+     85.884631,
+     26.153197
+    ],
+    [
+     85.884349,
+     26.153292
+    ],
+    [
+     85.884205,
+     26.153311
+    ],
+    [
+     85.88381,
+     26.153259
+    ],
+    [
+     85.883579,
+     26.153229
+    ],
+    [
+     85.883388,
+     26.153224
+    ],
+    [
+     85.883093,
+     26.153229
+    ],
+    [
+     85.883069,
+     26.153233
+    ],
+    [
+     85.882714,
+     26.153299
+    ],
+    [
+     85.882653,
+     26.153324
+    ],
+    [
+     85.882534,
+     26.153374
+    ],
+    [
+     85.88214,
+     26.15349
+    ],
+    [
+     85.881667,
+     26.153542
+    ],
+    [
+     85.881313,
+     26.153542
+    ],
+    [
+     85.881117,
+     26.153522
+    ],
+    [
+     85.880979,
+     26.153482
+    ],
+    [
+     85.880872,
+     26.153434
+    ],
+    [
+     85.880765,
+     26.153372
+    ],
+    [
+     85.880665,
+     26.153297
+    ]
+   ]
+  }
+ ],
+ "unverifiedHazards": [
+  {
+   "location": [
+    85.8935,
+    26.1488
+   ],
+   "hazardType": "fallen_tree",
+   "severity": "moderate",
+   "description": "Large tree across half the lane (citizen report, demo)."
+  },
+  {
+   "location": [
+    85.9068,
+    26.1342
+   ],
+   "hazardType": "waterlogging",
+   "severity": "severe",
+   "description": "Knee-deep water outside the market (citizen report, demo)."
+  }
+ ],
+ "shelters": [
+  {
+   "code": "shl-laheriasarai",
+   "name": "Laheriasarai Relief Camp",
+   "description": "School building (simulated demonstration shelter)",
+   "location": [
+    85.903963,
+    26.129029
+   ],
+   "address": "Near Laheriasarai Chowk (approx.)",
+   "area": "Laheriasarai",
+   "capacity": 650,
+   "occupancy": 412,
+   "status": "open",
+   "facilities": [
+    "water",
+    "medical",
+    "food",
+    "power",
+    "accessible",
+    "sanitation"
+   ],
+   "accessible": true,
+   "accessibilityNotes": "Ground-floor halls, ramp at main gate, accessible toilets.",
+   "contactPhone": "+91 00000 10001"
+  },
+  {
+   "code": "shl-donar",
+   "name": "Donar Community Hall",
+   "description": "Community hall (simulated demonstration shelter)",
+   "location": [
+    85.883501,
+    26.140611
+   ],
+   "address": null,
+   "area": "Donar",
+   "capacity": 280,
+   "occupancy": 261,
+   "status": "near_capacity",
+   "facilities": [
+    "water",
+    "food",
+    "sanitation"
+   ],
+   "accessible": false,
+   "accessibilityNotes": "Three steps at entrance; portable ramp on request.",
+   "contactPhone": "+91 00000 10002"
+  },
+  {
+   "code": "shl-kadirabad",
+   "name": "Kadirabad High-Ground Shelter",
+   "description": "College campus (simulated demonstration shelter)",
+   "location": [
+    85.913169,
+    26.162471
+   ],
+   "address": null,
+   "area": "Kadirabad",
+   "capacity": 900,
+   "occupancy": 388,
+   "status": "open",
+   "facilities": [
+    "water",
+    "medical",
+    "food",
+    "power",
+    "accessible",
+    "sanitation"
+   ],
+   "accessible": true,
+   "accessibilityNotes": "Level access across campus.",
+   "contactPhone": "+91 00000 10003"
+  },
+  {
+   "code": "shl-allalpatti",
+   "name": "Allalpatti Panchayat Bhawan",
+   "description": "Panchayat building (simulated demonstration shelter)",
+   "location": [
+    85.878743,
+    26.157577
+   ],
+   "address": null,
+   "area": "Allalpatti",
+   "capacity": 220,
+   "occupancy": 220,
+   "status": "full",
+   "facilities": [
+    "water",
+    "food"
+   ],
+   "accessible": false,
+   "accessibilityNotes": "First-floor hall only; no lift.",
+   "contactPhone": null
+  },
+  {
+   "code": "shl-benta",
+   "name": "Benta Stadium Camp",
+   "description": "Stadium (simulated demonstration shelter)",
+   "location": [
+    85.899683,
+    26.165207
+   ],
+   "address": null,
+   "area": "Benta",
+   "capacity": 1200,
+   "occupancy": 540,
+   "status": "open",
+   "facilities": [
+    "water",
+    "medical",
+    "food",
+    "power",
+    "sanitation"
+   ],
+   "accessible": false,
+   "accessibilityNotes": "Tent blocks; gravel paths difficult for wheelchairs.",
+   "contactPhone": "+91 00000 10005"
+  },
+  {
+   "code": "shl-shubhankarpur",
+   "name": "Shubhankarpur Middle School",
+   "description": "School building (simulated demonstration shelter)",
+   "location": [
+    85.86367,
+    26.14783
+   ],
+   "address": null,
+   "area": "Shubhankarpur",
+   "capacity": 340,
+   "occupancy": 190,
+   "status": "open",
+   "facilities": [
+    "water",
+    "food",
+    "accessible",
+    "sanitation"
+   ],
+   "accessible": true,
+   "accessibilityNotes": "Ramp at side entrance.",
+   "contactPhone": null
+  },
+  {
+   "code": "shl-mabbi",
+   "name": "Mabbi Relief Point",
+   "description": "Warehouse (temporary) (simulated demonstration shelter)",
+   "location": [
+    85.930204,
+    26.115355
+   ],
+   "address": null,
+   "area": "Mabbi",
+   "capacity": 450,
+   "occupancy": 0,
+   "status": "closed",
+   "facilities": [
+    "water",
+    "power"
+   ],
+   "accessible": false,
+   "accessibilityNotes": "Not yet staffed.",
+   "contactPhone": null
+  },
+  {
+   "code": "shl-bahadurpur",
+   "name": "Bahadurpur Primary Health Annexe",
+   "description": "Health annexe (simulated demonstration shelter)",
+   "location": [
+    85.920313,
+    26.145112
+   ],
+   "address": null,
+   "area": "Bahadurpur",
+   "capacity": 160,
+   "occupancy": 118,
+   "status": "open",
+   "facilities": [
+    "water",
+    "medical",
+    "food",
+    "power",
+    "accessible"
+   ],
+   "accessible": true,
+   "accessibilityNotes": "Priority for elderly, pregnant women and people with disabilities.",
+   "contactPhone": "+91 00000 10008"
+  }
+ ],
+ "teams": [
+  {
+   "code": "team-ndrf-1",
+   "name": "NDRF Alpha",
+   "kind": "NDRF",
+   "members": 12,
+   "availability": "available",
+   "capabilities": [
+    "boat",
+    "swiftwater",
+    "first_aid"
+   ],
+   "location": [
+    85.903433,
+    26.140485
+   ],
+   "leadName": "Insp. R. Kumar (demo)",
+   "leadPhone": "+91 00000 20001"
+  },
+  {
+   "code": "team-sdrf-2",
+   "name": "SDRF Bravo",
+   "kind": "SDRF",
+   "members": 10,
+   "availability": "available",
+   "capabilities": [
+    "cutting_tools",
+    "stretcher",
+    "first_aid"
+   ],
+   "location": [
+    85.888771,
+    26.151485
+   ],
+   "leadName": "SI A. Jha (demo)",
+   "leadPhone": "+91 00000 20002"
+  },
+  {
+   "code": "team-boat-3",
+   "name": "Boat Unit 3",
+   "kind": "Boat",
+   "members": 6,
+   "availability": "available",
+   "capabilities": [
+    "boat"
+   ],
+   "location": [
+    85.917483,
+    26.133309
+   ],
+   "leadName": "M. Sahni (demo)",
+   "leadPhone": "+91 00000 20003"
+  },
+  {
+   "code": "team-med-4",
+   "name": "Medical Response 4",
+   "kind": "Medical",
+   "members": 5,
+   "availability": "available",
+   "capabilities": [
+    "ambulance",
+    "medical",
+    "oxygen"
+   ],
+   "location": [
+    85.900513,
+    26.1435
+   ],
+   "leadName": "Dr. P. Mishra (demo)",
+   "leadPhone": "+91 00000 20004"
+  },
+  {
+   "code": "team-civ-5",
+   "name": "Civil Defence Echo",
+   "kind": "Civil Defence",
+   "members": 15,
+   "availability": "available",
+   "capabilities": [
+    "evacuation",
+    "relief_supplies"
+   ],
+   "location": [
+    85.879827,
+    26.16448
+   ],
+   "leadName": "S. Yadav (demo)",
+   "leadPhone": "+91 00000 20005"
+  }
+ ],
+ "incidents": [
+  {
+   "code": "INC-1041",
+   "location": [
+    85.891001,
+    26.13303
+   ],
+   "area": "Donar",
+   "emergencyType": "stranded",
+   "peopleCount": 14,
+   "childrenCount": 4,
+   "elderlyCount": 2,
+   "disabledCount": 0,
+   "medicalNeeded": false,
+   "trapped": true,
+   "lifeThreatening": true,
+   "notes": "Family group on rooftop, water at first-floor level.",
+   "minutesAgo": 95
+  },
+  {
+   "code": "INC-1042",
+   "location": [
+    85.910474,
+    26.120395
+   ],
+   "area": "Laheriasarai South",
+   "emergencyType": "medical",
+   "peopleCount": 2,
+   "childrenCount": 0,
+   "elderlyCount": 1,
+   "disabledCount": 0,
+   "medicalNeeded": true,
+   "trapped": false,
+   "lifeThreatening": true,
+   "notes": "Elderly man with breathing difficulty; road access cut.",
+   "minutesAgo": 67
+  },
+  {
+   "code": "INC-1043",
+   "location": [
+    85.870685,
+    26.14325
+   ],
+   "area": "Shubhankarpur",
+   "emergencyType": "stranded",
+   "peopleCount": 9,
+   "childrenCount": 3,
+   "elderlyCount": 0,
+   "disabledCount": 0,
+   "medicalNeeded": false,
+   "trapped": false,
+   "lifeThreatening": false,
+   "notes": "Residents asking for evacuation.",
+   "minutesAgo": 45
+  },
+  {
+   "code": "INC-1044",
+   "location": [
+    85.925004,
+    26.138071
+   ],
+   "area": "Bahadurpur",
+   "emergencyType": "supplies",
+   "peopleCount": 40,
+   "childrenCount": 0,
+   "elderlyCount": 0,
+   "disabledCount": 0,
+   "medicalNeeded": false,
+   "trapped": false,
+   "lifeThreatening": false,
+   "notes": "Drinking water running out in lane.",
+   "minutesAgo": 29
+  },
+  {
+   "code": "INC-1045",
+   "location": [
+    85.886649,
+    26.160292
+   ],
+   "area": "Allalpatti",
+   "emergencyType": "structure_collapse",
+   "peopleCount": 5,
+   "childrenCount": 1,
+   "elderlyCount": 1,
+   "disabledCount": 0,
+   "medicalNeeded": true,
+   "trapped": true,
+   "lifeThreatening": false,
+   "notes": "Boundary wall collapsed onto kutcha house.",
+   "minutesAgo": 112
+  },
+  {
+   "code": "INC-1046",
+   "location": [
+    85.908636,
+    26.152499
+   ],
+   "area": "Kadirabad",
+   "emergencyType": "missing_person",
+   "peopleCount": 1,
+   "childrenCount": 1,
+   "elderlyCount": 0,
+   "disabledCount": 0,
+   "medicalNeeded": false,
+   "trapped": false,
+   "lifeThreatening": false,
+   "notes": "Teenager missing since evening near drain.",
+   "minutesAgo": 16
+  },
+  {
+   "code": "INC-1047",
+   "location": [
+    85.869971,
+    26.158122
+   ],
+   "area": "Shubhankarpur West",
+   "emergencyType": "stranded",
+   "peopleCount": 6,
+   "childrenCount": 0,
+   "elderlyCount": 1,
+   "disabledCount": 1,
+   "medicalNeeded": false,
+   "trapped": false,
+   "lifeThreatening": false,
+   "notes": "Family and livestock on embankment.",
+   "minutesAgo": 3
+  },
+  {
+   "code": "INC-1049",
+   "location": [
+    85.897421,
+    26.13677
+   ],
+   "area": "Darbhanga Town",
+   "emergencyType": "medical",
+   "peopleCount": 1,
+   "childrenCount": 0,
+   "elderlyCount": 0,
+   "disabledCount": 0,
+   "medicalNeeded": true,
+   "trapped": false,
+   "lifeThreatening": false,
+   "notes": "Pregnant woman needs transfer to hospital.",
+   "minutesAgo": 42
+  }
+ ],
+ "missions": [
+  {
+   "code": "MSN-301",
+   "incident": "INC-1041",
+   "team": "team-ndrf-1",
+   "status": "en_route"
+  },
+  {
+   "code": "MSN-302",
+   "incident": "INC-1042",
+   "team": "team-boat-3",
+   "status": "assigned"
+  },
+  {
+   "code": "MSN-303",
+   "incident": "INC-1045",
+   "team": "team-sdrf-2",
+   "status": "on_site"
+  },
+  {
+   "code": "MSN-304",
+   "incident": "INC-1049",
+   "team": "team-med-4",
+   "status": "accepted"
+  }
+ ]
+}

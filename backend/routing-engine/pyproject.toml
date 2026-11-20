@@ -1,0 +1,24 @@
+[project]
+name = "suraksha-routing-engine"
+version = "0.1.0"
+description = "SURAKSHA flood-evacuation routing engine"
+requires-python = ">=3.12"
+dependencies = [
+  "fastapi>=0.115",
+  "uvicorn[standard]>=0.30",
+  "networkx>=3.3",
+  "psycopg[binary]>=3.2",
+  "pydantic>=2.8",
+  "pydantic-settings>=2.4",
+]
+
+[dependency-groups]
+dev = ["pytest>=8", "httpx>=0.27"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+markers = ["integration: needs a reachable DATABASE_URL"]
+
+[tool.uv]
+package = false
