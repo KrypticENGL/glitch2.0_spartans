@@ -8,9 +8,12 @@ const publicSans = Public_Sans({ variable: "--font-public-sans", subsets: ["lati
 export const metadata: Metadata = {
   title: { default: "SURAKSHA — Flood evacuation & rescue coordination", template: "%s · SURAKSHA" },
   description: "Find flood shelters, explore evacuation routes and coordinate rescue in Bihar. Demonstration build with simulated data.",
+  applicationName: "SURAKSHA",
+  appleWebApp: { capable: true, title: "SURAKSHA", statusBarStyle: "default" },
+  icons: { icon: "/favicon.ico", apple: "/icons/apple-touch-icon.png" },
 };
 
-export const viewport: Viewport = { themeColor: "#0E2235", width: "device-width", initialScale: 1 };
+export const viewport: Viewport = { themeColor: "#1B3034", width: "device-width", initialScale: 1 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (

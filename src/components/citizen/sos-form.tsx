@@ -52,6 +52,11 @@ export function SOSFormView() {
   }
 
   async function confirm() {
+    // Never show an SOS as sent when the device is offline; the form keeps its contents.
+    if (!navigator.onLine) {
+      toast.error("You're offline. Your request was not sent.", { description: "Reconnect and try again, or call 112 now." });
+      return;
+    }
     const loc = LOCALITIES.find((l) => l.area === form.area)!;
     const inc = await api.submitSOS({
       location: { coordinates: loc.coordinates, area: loc.area, district: DEMO_REGION.district },

@@ -7,6 +7,8 @@ export const EVENT_TYPES = [
   "sos.created",
   "mission.assigned",
   "mission.status.updated",
+  "alert.published",
+  "alert.dispatch.updated",
 ] as const;
 
 export type EventType = (typeof EVENT_TYPES)[number];

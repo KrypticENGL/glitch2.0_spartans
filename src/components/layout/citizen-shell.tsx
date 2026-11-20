@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { Bell, House, LayoutDashboard, LifeBuoy, MapPin, Route, ShieldAlert, TriangleAlert } from "lucide-react";
 import type { ReactNode } from "react";
 import { Brand } from "./brand";
+import { NotificationBell } from "@/components/notifications/notification-bell";
 import { DemoBadge } from "@/components/shared/status";
 import { DEMO_REGION } from "@/config/geo";
 import { cn } from "@/lib/utils";
@@ -37,11 +38,12 @@ export function CitizenShell({ children }: { children: ReactNode }) {
             ))}
           </nav>
           <div className="ml-auto hidden items-center gap-2 border-l pl-4 lg:flex">
+            <NotificationBell />
             <Link href="/dashboard" className="rounded-md px-2 py-2 text-xs font-medium text-muted-foreground hover:bg-muted hover:text-foreground"><LayoutDashboard className="mr-1.5 inline size-3.5" aria-hidden />Operations</Link>
             <Link href="/responder" className="rounded-md px-2 py-2 text-xs font-medium text-muted-foreground hover:bg-muted hover:text-foreground"><ShieldAlert className="mr-1.5 inline size-3.5" aria-hidden />Responder</Link>
             <Link href="/sos" className="ml-1 inline-flex h-9 items-center gap-2 rounded-md bg-danger px-3.5 text-sm font-semibold text-white hover:bg-danger/90"><LifeBuoy className="size-4" aria-hidden />Emergency help</Link>
           </div>
-          <div className="ml-auto lg:hidden"><DemoBadge label="Demo" /></div>
+          <div className="ml-auto flex items-center gap-1 lg:hidden"><DemoBadge label="Demo" /><NotificationBell /></div>
         </div>
       </header>
 

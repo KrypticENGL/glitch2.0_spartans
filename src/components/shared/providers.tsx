@@ -3,6 +3,7 @@
 import { useEffect, type ReactNode } from "react";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Toaster } from "@/components/ui/sonner";
+import { ServiceWorkerManager } from "@/components/pwa/sw-manager";
 import { useDemoStore } from "@/store/demo-store";
 
 export function Providers({ children }: { children: ReactNode }) {
@@ -13,6 +14,7 @@ export function Providers({ children }: { children: ReactNode }) {
   return (
     <TooltipProvider delayDuration={300}>
       {children}
+      <ServiceWorkerManager />
       <Toaster theme="light" position="top-center" richColors closeButton />
     </TooltipProvider>
   );

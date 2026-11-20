@@ -46,8 +46,8 @@ export interface TestContext {
   events: RecordingPublisher;
 }
 
-export function makeTestApp(overrides: Partial<AppDeps> = {}): TestContext {
-  const config = loadConfig(testEnv());
+export function makeTestApp(overrides: Partial<AppDeps> = {}, env: Record<string, string> = {}): TestContext {
+  const config = loadConfig({ ...testEnv(), ...env });
   const pool = createPool(config.DATABASE_URL, 1);
   const events = new RecordingPublisher();
   const deps: AppDeps = { config, pool, logger: createLogger("silent"), routing: unavailableRouting, realtime: events, ...overrides };

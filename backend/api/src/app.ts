@@ -8,12 +8,14 @@ import swaggerUi from "swagger-ui-express";
 import type { AppDeps } from "./deps.js";
 import { authenticate } from "./middleware/auth.js";
 import { errorHandler, notFoundHandler } from "./middleware/error.js";
+import { adminAlertsRouter, alertsRouter } from "./modules/alerts/router.js";
 import { authRouter } from "./modules/auth/router.js";
 import { dashboardRouter } from "./modules/dashboard/router.js";
 import { hazardsRouter } from "./modules/hazards/router.js";
 import { healthRouter } from "./modules/health/router.js";
 import { incidentsRouter, sosRouter } from "./modules/incidents/router.js";
 import { missionsRouter, teamsRouter } from "./modules/rescue/router.js";
+import { pushRouter } from "./modules/push/router.js";
 import { roadsRouter } from "./modules/roads/router.js";
 import { routesRouter } from "./modules/routing/router.js";
 import { sheltersRouter } from "./modules/shelters/router.js";
@@ -77,6 +79,9 @@ export function createApp(deps: AppDeps) {
   v1.use("/rescue-teams", teamsRouter(deps));
   v1.use("/missions", missionsRouter(deps));
   v1.use("/dashboard", dashboardRouter(deps));
+  v1.use("/push", pushRouter(deps));
+  v1.use("/alerts", alertsRouter(deps));
+  v1.use("/admin/alerts", adminAlertsRouter(deps, limiter(config.RATE_LIMIT_ALERT_SEND_MAX, "RATE_LIMITED")));
   app.use("/api/v1", v1);
 
   app.use(notFoundHandler);

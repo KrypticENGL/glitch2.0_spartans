@@ -1,6 +1,8 @@
 import { OpenAPIRegistry, OpenApiGeneratorV31, type RouteConfig } from "@asteasolutions/zod-to-openapi";
 import { ErrorResponse, UuidParam } from "../lib/schemas.js";
 import { z } from "../lib/zod.js";
+import { AdminAlert, Alert, AlertCreateBody, AlertDraftResponse, AlertListQuery, AlertSendBody, DeliveryReport, DispatchSummary } from "../modules/alerts/schemas.js";
+import { PreferencesPatch, PushConfigResponse, PushHeaders, PushSubscriptionView, SubscribeBody, SubscribeResponse } from "../modules/push/schemas.js";
 import { AuthResponse, LoginBody, RegisterBody, User } from "../modules/auth/schemas.js";
 import { HazardChangeResult, HazardCreateBody, HazardListQuery, HazardPage, Hazard, HazardStatusBody, HazardVerifyBody } from "../modules/hazards/schemas.js";
 import { Incident, IncidentListQuery, IncidentPage, IncidentStatusBody, PriorityOverrideBody, SosCreateBody } from "../modules/incidents/schemas.js";
@@ -131,6 +133,33 @@ export function buildOpenApiDocument() {
   add("get", "/dashboard/incidents", "dashboard", "Active incidents", "staff", { ok: IncidentPage });
   add("get", "/dashboard/shelters", "dashboard", "All shelters with occupancy", "staff", { ok: ShelterPage });
   add("get", "/dashboard/operations", "dashboard", "Teams and active missions", "staff", { ok: z.object({ teams: z.array(RescueTeam), activeMissions: z.array(Mission) }) });
+
+  // Push & alerts
+  const pushHeaders = PushHeaders;
+  add("get", "/push/config", "push", "VAPID public key and subscribable areas", "public", { ok: PushConfigResponse });
+  add("post", "/push/subscribe", "push", "Store a browser push subscription (idempotent per endpoint; renews the old one when its headers are sent)", "optional", {
+    body: SubscribeBody,
+    ok: SubscribeResponse,
+    okStatus: 201,
+    extra: { 200: json(SubscribeResponse, "Existing subscription updated"), 422: err("Endpoint is not a supported push service"), 503: err("Push not configured") },
+  });
+  add("post", "/push/unsubscribe", "push", "Revoke a subscription (manage token or signed-in owner)", "optional", { headers: pushHeaders, ok: z.object({ id: z.uuid(), unsubscribed: z.boolean() }), extra: { 404: err("Not found") } });
+  add("get", "/push/preferences", "push", "Read a subscription's areas and preferences", "optional", { headers: pushHeaders, ok: PushSubscriptionView, extra: { 404: err("Not found") } });
+  add("patch", "/push/preferences", "push", "Change areas or minimum severity", "optional", { headers: pushHeaders, body: PreferencesPatch, ok: PushSubscriptionView, extra: { 404: err("Not found") } });
+  add("get", "/alerts", "alerts", "Published in-app alerts (active only unless includeExpired)", "public", { query: AlertListQuery, ok: z.object({ data: z.array(Alert), generatedAt: z.string() }) });
+  add("get", "/alerts/{id}", "alerts", "A published alert", "public", { params: UuidParam, ok: Alert, extra: { 404: err("Not found") } });
+  add("get", "/admin/alerts", "alerts", "Recent alerts with dispatch summaries", "admin", { ok: z.object({ data: z.array(AdminAlert) }) });
+  add("post", "/admin/alerts", "alerts", "Create a draft alert and preview it (always [DEMO] in this build)", "admin", { body: AlertCreateBody, ok: AlertDraftResponse, okStatus: 201 });
+  add("get", "/admin/alerts/{id}", "alerts", "Draft preview with eligible subscription count", "admin", { params: UuidParam, ok: AlertDraftResponse });
+  add("post", "/admin/alerts/{id}/send", "alerts", "Send an alert once (Idempotency-Key required; push runs in the background)", "admin", {
+    params: UuidParam,
+    body: AlertSendBody,
+    headers: z.object({ "idempotency-key": z.string() }),
+    ok: z.object({ alert: Alert, dispatch: DispatchSummary, replay: z.boolean() }),
+    okStatus: 202,
+    extra: { 200: json(z.object({ alert: Alert, dispatch: DispatchSummary, replay: z.boolean() }), "Replay of the same Idempotency-Key"), 409: err("Already sent / expired"), 429: err("Rate limited"), 503: err("Push not configured") },
+  });
+  add("get", "/admin/alerts/{id}/delivery", "alerts", "Dispatch counts and per-subscription results", "admin", { params: UuidParam, ok: DeliveryReport });
 
   // Health (also mounted at /health)
   add("get", "/health/live", "health", "Liveness", "public");

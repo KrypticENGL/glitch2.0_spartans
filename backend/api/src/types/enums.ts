@@ -25,3 +25,10 @@ export type IncidentStatus = (typeof INCIDENT_STATUSES)[number];
 export type MissionStatus = (typeof MISSION_STATUSES)[number];
 export type TravelMode = (typeof TRAVEL_MODES)[number];
 export type RouteRecordStatus = (typeof ROUTE_RECORD_STATUSES)[number];
+
+// database/migrations/003_push_alerts.sql
+export const ALERT_SEVERITIES = ["advisory", "warning", "severe", "critical"] as const;
+export const ALERT_STATUSES = ["draft", "sending", "sent", "failed"] as const;
+export const ALERT_LANGUAGES = ["en", "hi"] as const;
+export type AlertSeverity = (typeof ALERT_SEVERITIES)[number];
+export type AlertLanguage = (typeof ALERT_LANGUAGES)[number];

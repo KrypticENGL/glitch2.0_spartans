@@ -1,4 +1,7 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
+import { LiveAlerts } from "@/components/notifications/live-alerts";
+import { PushOptIn } from "@/components/notifications/push-opt-in";
 import { SEED_ALERTS } from "@/data/mock/seed";
 import { ROAD_SEGMENTS } from "@/data/mock/road-segments";
 import { AlertItem } from "@/components/citizen/alert-item";
@@ -17,6 +20,11 @@ export default function AlertsPage() {
       <p className="text-sm text-muted-foreground">
         These alerts are part of the demonstration scenario, not live warnings. Official flood bulletins come from the Bihar State Disaster Management Authority and the district administration.
       </p>
+      <Suspense fallback={null}>
+        <LiveAlerts />
+      </Suspense>
+      <PushOptIn />
+      <h2 className="text-lg font-bold">Scenario alerts</h2>
       <ul className="space-y-2.5">
         {SEED_ALERTS.map((a) => <AlertItem key={a.id} alert={a} />)}
       </ul>

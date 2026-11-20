@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { BarChart3, Gauge, House, LifeBuoy, Map, RotateCcw, ShieldAlert, Siren, Tent } from "lucide-react";
+import { BarChart3, Gauge, Megaphone, House, LifeBuoy, Map, RotateCcw, ShieldAlert, Siren, Tent } from "lucide-react";
 import type { ReactNode } from "react";
 import { toast } from "sonner";
 import {
@@ -45,6 +45,7 @@ const NAV = [
   { href: "/dashboard/rescue", label: "Rescue coordination", icon: LifeBuoy },
   { href: "/dashboard/shelters", label: "Shelters", icon: Tent },
   { href: "/dashboard/analytics", label: "Analytics", icon: BarChart3 },
+  { href: "/dashboard/alerts", label: "Alert management", icon: Megaphone },
 ];
 
 const TITLES: Record<string, string> = Object.fromEntries(NAV.map((n) => [n.href, n.label]));

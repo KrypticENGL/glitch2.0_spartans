@@ -5,6 +5,7 @@ import { createPool } from "./db/pool.js";
 import { createLogger } from "./lib/logger.js";
 import { sweepExpiredReservations } from "./modules/shelters/service.js";
 import { RealtimeHub } from "./realtime/hub.js";
+import { WebPushSender } from "./services/push-sender.js";
 import { HttpRoutingClient } from "./services/routing-client.js";
 
 const config = loadConfig();
@@ -14,7 +15,9 @@ pool.on("error", (err) => logger.error({ err }, "idle database client error"));
 
 const realtime = new RealtimeHub(config.JWT_SECRET, config.CORS_ORIGINS, logger);
 const routing = new HttpRoutingClient(config.ROUTING_ENGINE_URL, config.ROUTING_TIMEOUT_MS, logger);
-const deps = { config, pool, logger, routing, realtime };
+const push = config.push ? new WebPushSender(config.push, config.PUSH_TIMEOUT_MS) : undefined;
+if (!push) logger.warn("Web Push disabled: set VAPID_PUBLIC_KEY, VAPID_PRIVATE_KEY, VAPID_SUBJECT and PUSH_ENCRYPTION_KEY (npm run vapid:generate)");
+const deps = { config, pool, logger, routing, realtime, push };
 const server = createServer(createApp(deps));
 realtime.attach(server);
 
