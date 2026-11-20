@@ -1,5 +1,5 @@
 // End-to-end demonstration against a running stack (API + routing engine + DB).
-// Usage (from backend/api so dependencies resolve): node ../scripts/demo-e2e.mjs [http://localhost:4000]
+// Usage: cd backend/api && npm run demo [-- http://localhost:4000]
 // Requires seeded demo users (npm run seed:demo). Exits non-zero on any failed expectation.
 import { io } from "socket.io-client";
 

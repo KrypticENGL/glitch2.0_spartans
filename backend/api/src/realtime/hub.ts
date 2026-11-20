@@ -64,7 +64,7 @@ export class RealtimeHub implements Publisher {
 
   private onConnection(socket: IoSocket) {
     const user = socket.data.user;
-    const auto = [rooms.public];
+    const auto: string[] = [rooms.public];
     if (user) {
       auto.push(rooms.user(user.id));
       if (user.role === "admin") auto.push(rooms.admins);

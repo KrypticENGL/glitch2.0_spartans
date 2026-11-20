@@ -3,7 +3,7 @@ import pg from "pg";
 // int8 (counts, edge ids, graph version) as JS numbers: all values here are far below 2^53.
 pg.types.setTypeParser(20, (v) => Number(v));
 // int8[] (route_records.edge_ids); elements are never NULL.
-pg.types.setTypeParser(1016, (v) => (v === "{}" ? [] : v.slice(1, -1).split(",").map(Number)));
+(pg.types.setTypeParser as (oid: number, parse: (v: string) => unknown) => void)(1016, (v) => (v === "{}" ? [] : v.slice(1, -1).split(",").map(Number)));
 
 export type Pool = pg.Pool;
 export type PoolClient = pg.PoolClient;

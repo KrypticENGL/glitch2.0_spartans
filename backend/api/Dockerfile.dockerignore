@@ -1,0 +1,10 @@
+# BuildKit picks this up for -f api/Dockerfile (paths relative to the backend/ context).
+**/node_modules
+**/.env
+**/.env.*
+!**/.env.example
+api/dist
+api/test
+devdb
+routing-engine
+simulation-data/osm-darbhanga.json
