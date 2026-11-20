@@ -69,8 +69,8 @@ export function ShelterCard({ shelter, distanceM, selected, onSelect }: CardProp
       aria-pressed={selected}
       data-shelter-id={shelter.id}
       className={cn(
-        "group w-full rounded-lg border bg-card p-3.5 text-left transition-[border-color,box-shadow] hover:border-primary/30",
-        selected && "border-teal shadow-[0_0_0_1px_var(--teal)]",
+        "group relative w-full border-b bg-card px-1 py-3.5 text-left transition-colors hover:bg-muted/35",
+        selected && "bg-[#f1f7f5] before:absolute before:inset-y-2 before:left-[-1rem] before:w-[3px] before:bg-teal",
       )}
     >
       <div className="flex items-start justify-between gap-3">

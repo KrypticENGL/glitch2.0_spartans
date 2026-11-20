@@ -40,7 +40,14 @@ export function DashboardOverview() {
   const onSelect = (sel: MapSelection) => sel.kind === "incident" && setOpenId(sel.id);
 
   return (
-    <div className="space-y-4 p-3 md:p-4">
+    <div className="space-y-4 p-3 md:p-5">
+      <div className="flex flex-wrap items-end justify-between gap-2 border-b pb-3">
+        <div>
+          <p className="text-xs font-medium text-muted-foreground">Darbhanga district · demonstration state</p>
+          <h2 className="mt-1 text-lg font-semibold tracking-tight">Situation overview</h2>
+        </div>
+        <p className="text-xs text-muted-foreground">Map, incidents and resource capacity</p>
+      </div>
       <dl className="grid grid-cols-2 gap-px overflow-hidden rounded-lg border bg-border sm:grid-cols-3 xl:grid-cols-6">
         <Stat label="Active incidents" value={m.activeIncidents} sub={`${m.criticalIncidents} critical · ${m.unassignedIncidents} without a team`} alert={m.unassignedIncidents > 0} />
         <Stat label="People awaiting help" value={m.peopleAwaiting} sub="Across open incidents" />
@@ -51,7 +58,7 @@ export function DashboardOverview() {
       </dl>
 
       <div className="grid gap-4 xl:grid-cols-[1fr_380px]">
-        <section aria-label="Situation map" className="relative h-[420px] overflow-hidden rounded-lg border xl:h-[560px]">
+        <section aria-label="Situation map" className="relative h-[420px] overflow-hidden rounded-lg border bg-card xl:h-[590px]">
           <MapView
             label="Operations overview map"
             compact

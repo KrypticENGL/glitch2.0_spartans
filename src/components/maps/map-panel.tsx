@@ -27,9 +27,9 @@ export function MapPanel({ title, header, children, size, onSizeChange, classNam
     <section
       aria-label={title}
       className={cn(
-        "absolute inset-x-0 bottom-0 z-20 flex flex-col rounded-t-xl border-t bg-background shadow-[0_-4px_16px_rgb(14_34_53/0.12)] transition-[height] duration-200",
+        "absolute inset-x-0 bottom-0 z-20 flex flex-col rounded-t-xl border-t bg-card shadow-[0_-4px_18px_rgb(24_40_45/0.12)] transition-[height] duration-200",
         SHEET_HEIGHT[size],
-        "md:top-3 md:bottom-3 md:left-3 md:h-auto md:w-[400px] md:rounded-xl md:border md:shadow-[0_2px_10px_rgb(14_34_53/0.12)]",
+        "md:top-3 md:bottom-3 md:left-3 md:h-auto md:w-[390px] md:rounded-lg md:border md:shadow-[0_4px_18px_rgb(24_40_45/0.12)]",
         className,
       )}
     >

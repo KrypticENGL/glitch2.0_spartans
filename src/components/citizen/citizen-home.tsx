@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowUpRight, LifeBuoy, LocateFixed, Navigation, TriangleAlert } from "lucide-react";
+import { useState } from "react";
+import { ArrowRight, LocateFixed, Navigation, Phone, TriangleAlert } from "lucide-react";
 import { useDemoStore } from "@/store/demo-store";
 import { SEED_ALERTS, DEMO_ORIGIN } from "@/data/mock/seed";
 import { ROAD_SEGMENTS } from "@/data/mock/road-segments";
@@ -9,7 +10,8 @@ import { SHELTER_DISTANCE } from "@/features/shelters/selectors";
 import { getRoutesToShelter } from "@/features/routing/adapter";
 import { L, formatKm, formatMin, formatTime, occupancyPct, spacesLeft, tone } from "@/lib/format";
 import { Meter, StatusBadge } from "@/components/shared/status";
-import { AlertItem } from "./alert-item";
+import { MapView } from "@/components/maps/map-view";
+import { nextFocus, type CameraFocus, type MapSelection } from "@/components/maps/map-types";
 import { Button } from "@/components/ui/button";
 
 export function CitizenHome() {
@@ -17,119 +19,139 @@ export function CitizenHome() {
   const nearest = [...shelters]
     .filter((s) => s.status === "open" || s.status === "near_capacity")
     .sort((a, b) => (SHELTER_DISTANCE[a.id] ?? 1e9) - (SHELTER_DISTANCE[b.id] ?? 1e9));
-  // Best destination: nearest shelter with space that has a non-blocked route.
   const best = nearest.find((s) => getRoutesToShelter(s.id).some((r) => r.classification === "recommended"));
-  const bestRoute = best ? getRoutesToShelter(best.id)[0] : undefined;
-  const closed = ROAD_SEGMENTS.filter((r) => r.condition === "blocked" || r.condition === "flooded");
+  const [selectedId, setSelectedId] = useState<string | null>(best?.id ?? null);
+  const [focus, setFocus] = useState<CameraFocus | null>(null);
+  const selected = shelters.find((s) => s.id === selectedId) ?? best;
+  const selectedRoutes = selected ? getRoutesToShelter(selected.id) : [];
+  const bestRoute = selectedRoutes.find((r) => r.classification === "recommended") ?? selectedRoutes[0];
   const top = SEED_ALERTS[0];
 
-  return (
-    <div className="mx-auto w-full max-w-5xl space-y-6 px-4 py-5 md:py-8">
-      <section aria-labelledby="loc-h" className="space-y-1">
-        <p className="flex items-center gap-1.5 text-sm text-muted-foreground">
-          <LocateFixed className="size-4" aria-hidden /> {DEMO_ORIGIN.label}
-        </p>
-        <h1 id="loc-h" className="text-[26px] leading-tight font-bold md:text-3xl">{DEMO_ORIGIN.area}, Darbhanga</h1>
-      </section>
+  function onMapSelect(selection: MapSelection) {
+    if (selection.kind === "shelter") setSelectedId(selection.id);
+  }
 
-      <Link href="/alerts" className="flex items-start gap-3 rounded-lg border border-danger/30 bg-danger/[0.06] p-3.5 hover:bg-danger/10">
-        <TriangleAlert className="mt-0.5 size-5 shrink-0 text-danger" aria-hidden />
-        <span className="min-w-0">
-          <span className="flex flex-wrap items-center gap-2">
-            <StatusBadge tone="danger">{L.alert[top.severity]} alert</StatusBadge>
-            <span className="text-xs text-muted-foreground">Issued {formatTime(top.issuedAt)}</span>
+  return (
+    <div className="mx-auto w-full max-w-[1500px] space-y-5 px-4 py-4 md:px-7 md:py-6">
+      <header className="flex flex-wrap items-end justify-between gap-x-6 gap-y-3">
+        <div>
+          <p className="flex items-center gap-1.5 text-xs font-semibold tracking-wide text-muted-foreground">
+            <LocateFixed className="size-3.5 text-teal" aria-hidden /> YOUR AREA
+          </p>
+          <h1 className="mt-1 text-2xl font-semibold tracking-[-0.035em] md:text-[28px]">{DEMO_ORIGIN.area}, Darbhanga</h1>
+        </div>
+        <p className="text-sm text-muted-foreground">Flood response · Bihar</p>
+      </header>
+
+      <Link href="/alerts" className="group flex items-center gap-3 border-y border-danger/25 py-3.5" aria-label={`${L.alert[top.severity]} alert: ${top.title}. View alert details`}>
+        <span className="h-8 w-1 shrink-0 rounded-full bg-danger" aria-hidden />
+        <span className="min-w-0 flex-1">
+          <span className="flex flex-wrap items-center gap-x-2.5 gap-y-1">
+            <StatusBadge tone="danger">{L.alert[top.severity]}</StatusBadge>
+            <span className="font-semibold">{top.title}</span>
+            <span className="text-xs text-muted-foreground">{formatTime(top.issuedAt)}</span>
           </span>
-          <span className="mt-1 block font-semibold">{top.title}</span>
-          <span className="mt-0.5 block text-sm text-muted-foreground">{top.body}</span>
+          <span className="mt-1 block line-clamp-1 text-sm text-muted-foreground">{top.body}</span>
         </span>
+        <ArrowRight className="size-4 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-0.5" aria-hidden />
       </Link>
 
-      <section aria-label="Emergency actions" className="grid gap-3 md:grid-cols-[1.4fr_1fr]">
-        <div className="rounded-xl bg-primary p-5 text-primary-foreground">
-          <p className="text-sm text-[#9fb3c6]">Suggested shelter</p>
-          {best && bestRoute ? (
-            <>
-              <p className="mt-1 text-xl font-bold">{best.name}</p>
-              <p className="mt-1 text-sm text-[#c7d2dd]">
-                {formatKm(bestRoute.distanceM)} · about {formatMin(bestRoute.durationS)} by vehicle · {spacesLeft(best)} spaces left
-              </p>
-              <Button asChild size="lg" className="mt-4 h-12 w-full bg-teal text-base text-white hover:bg-teal/90 md:w-auto md:px-6">
-                <Link href={`/evacuation?to=${best.id}`}><Navigation /> Start evacuation route</Link>
-              </Button>
-            </>
-          ) : (
-            <p className="mt-1">No shelter currently has a passable route. Use SOS to request rescue.</p>
-          )}
+      <section aria-label="Shelters and evacuation map" className="grid min-h-[610px] overflow-hidden rounded-xl border bg-card lg:grid-cols-[minmax(0,1fr)_350px] xl:grid-cols-[minmax(0,1fr)_390px]">
+        <div className="relative min-h-[360px] border-b lg:min-h-[610px] lg:border-b-0 lg:border-r">
+          <MapView
+            label="Interactive 3D map of nearby shelters and evacuation routes"
+            shelters={nearest}
+            roads={ROAD_SEGMENTS}
+            routes={bestRoute ? [{ id: bestRoute.id, label: "Recommended route", classification: bestRoute.classification, coordinates: bestRoute.coordinates }] : []}
+            selectedRouteId={bestRoute?.id ?? null}
+            origin={DEMO_ORIGIN}
+            selection={selected ? { kind: "shelter", id: selected.id } : null}
+            onSelect={onMapSelect}
+            focus={focus}
+            compact
+          />
+          <div className="pointer-events-none absolute top-3 left-3 rounded-md border bg-card/95 px-3 py-2 text-xs font-medium shadow-sm">
+            <span className="mr-2 inline-block size-2 rounded-full bg-teal" aria-hidden />
+            Darbhanga response area
+          </div>
+          <Link href="/shelters" className="absolute right-3 bottom-3 rounded-md border bg-card px-3 py-2 text-xs font-semibold shadow-sm hover:bg-muted">Explore shelter map</Link>
         </div>
-        <div className="flex flex-col gap-3">
-          <Button asChild size="lg" className="h-auto flex-1 justify-start gap-3 bg-danger p-5 text-left text-white hover:bg-danger/90">
-            <Link href="/sos">
-              <LifeBuoy className="size-6!" />
-              <span>
-                <span className="block text-lg font-bold">Request rescue</span>
-                <span className="block text-sm font-normal opacity-90">Demo SOS: not sent to emergency services</span>
-              </span>
-            </Link>
-          </Button>
-          <Button asChild variant="outline" size="lg" className="h-12 justify-start bg-card">
-            <Link href="/reports"><TriangleAlert /> Report a road hazard</Link>
-          </Button>
-        </div>
-      </section>
 
-      <section aria-labelledby="near-h" className="space-y-3">
-        <div className="flex items-baseline justify-between">
-          <h2 id="near-h" className="text-lg font-bold">Shelters with space near you</h2>
-          <Link href="/shelters" className="inline-flex items-center gap-1 text-sm font-semibold text-[#0a6567] hover:underline">
-            Open map <ArrowUpRight className="size-4" aria-hidden />
+        <div className="flex min-w-0 flex-col">
+          <div className="border-b px-4 py-4 md:px-5">
+            <div className="flex items-baseline justify-between gap-3">
+              <div>
+                <h2 className="text-lg font-semibold tracking-tight">Evacuate nearby</h2>
+                <p className="mt-0.5 text-sm text-muted-foreground">Open shelters, sorted by distance</p>
+              </div>
+              <span className="shrink-0 text-xs text-muted-foreground">{nearest.length} locations</span>
+            </div>
+          </div>
+
+          {selected && bestRoute ? (
+            <div className="border-b bg-[#f2f8f7] px-4 py-4 md:px-5">
+              <p className="text-[11px] font-semibold text-teal">RECOMMENDED DESTINATION</p>
+              <h3 className="mt-1 text-base font-semibold leading-snug">{selected.name}</h3>
+              <p className="mt-1 text-sm text-muted-foreground">{selected.location.area} · {formatKm(bestRoute.distanceM)} · {formatMin(bestRoute.durationS)} by vehicle</p>
+              <div className="mt-3 flex items-center justify-between text-xs">
+                <span className="font-semibold text-ok">{spacesLeft(selected)} spaces available</span>
+                <span className="text-muted-foreground">{selected.capacity} total</span>
+              </div>
+              <Meter className="mt-1.5" value={occupancyPct(selected)} tone={tone.shelter[selected.status]} label={`${selected.name} occupancy`} />
+              <Button asChild className="mt-4 h-10 w-full bg-teal text-white hover:bg-teal/90">
+                <Link href={`/evacuation?to=${selected.id}`}><Navigation /> Start this route</Link>
+              </Button>
+            </div>
+          ) : (
+            <p className="border-b px-5 py-5 text-sm text-muted-foreground">No shelter currently has a recommended route. Request rescue if you need help.</p>
+          )}
+
+          <ul className="min-h-0 flex-1 divide-y overflow-y-auto">
+            {nearest.slice(0, 4).map((s) => {
+              const active = selected?.id === s.id;
+              return (
+                <li key={s.id}>
+                  <button type="button" onClick={() => {
+                    setSelectedId(s.id);
+                    setFocus((f) => nextFocus(f, { center: s.location.coordinates, zoom: 14 }));
+                  }} aria-pressed={active} className={`w-full px-4 py-3 text-left transition-colors hover:bg-muted/50 md:px-5 ${active ? "bg-[#f5f8f7]" : ""}`}>
+                    <span className="flex items-start justify-between gap-3">
+                      <span className="min-w-0">
+                        <span className="block truncate text-sm font-semibold">{s.name}</span>
+                        <span className="mt-0.5 block text-xs text-muted-foreground">{s.location.area} · {formatKm(SHELTER_DISTANCE[s.id])} away</span>
+                      </span>
+                      <StatusBadge tone={tone.shelter[s.status]}>{L.shelterStatus[s.status]}</StatusBadge>
+                    </span>
+                    <span className="mt-2 flex items-center justify-between text-xs">
+                      <span className="font-medium">{spacesLeft(s)} spaces free</span>
+                      <span className="text-muted-foreground">{occupancyPct(s)}% occupied</span>
+                    </span>
+                  </button>
+                </li>
+              );
+            })}
+          </ul>
+          <Link href="/shelters" className="flex items-center justify-between border-t px-4 py-3 text-sm font-semibold text-teal hover:bg-muted/40 md:px-5">
+            All shelters <ArrowRight className="size-4" aria-hidden />
           </Link>
         </div>
-        <ul className="grid gap-2.5 md:grid-cols-3">
-          {nearest.slice(0, 3).map((s) => (
-            <li key={s.id}>
-              <Link href={`/evacuation?to=${s.id}`} className="block rounded-lg border bg-card p-3.5 hover:border-primary/30">
-                <span className="flex items-start justify-between gap-2">
-                  <span className="font-semibold">{s.name}</span>
-                  <StatusBadge tone={tone.shelter[s.status]}>{L.shelterStatus[s.status]}</StatusBadge>
-                </span>
-                <span className="mt-0.5 block text-sm text-muted-foreground">{s.location.area} · {formatKm(SHELTER_DISTANCE[s.id])}</span>
-                <span className="mt-3 block text-sm"><b>{spacesLeft(s)}</b> of {s.capacity} spaces free</span>
-                <Meter className="mt-1.5" value={occupancyPct(s)} tone={tone.shelter[s.status]} label={`${s.name} occupancy`} />
-              </Link>
-            </li>
-          ))}
-        </ul>
       </section>
 
-      <section aria-labelledby="roads-h" className="grid gap-6 md:grid-cols-2">
-        <div className="space-y-3">
-          <h2 id="roads-h" className="text-lg font-bold">Roads to avoid</h2>
-          <ul className="divide-y rounded-lg border bg-card">
-            {closed.map((r) => (
-              <li key={r.id} className="flex items-start justify-between gap-3 p-3">
-                <span>
-                  <span className="block text-sm font-semibold">{r.name}</span>
-                  <span className="block text-sm text-muted-foreground">{r.note}</span>
-                </span>
-                <StatusBadge tone={tone.road[r.condition]}>{L.road[r.condition]}</StatusBadge>
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div className="space-y-3">
-          <div className="flex items-baseline justify-between">
-            <h2 className="text-lg font-bold">Other alerts</h2>
-            <Link href="/alerts" className="text-sm font-semibold text-[#0a6567] hover:underline">All alerts</Link>
+      <section aria-label="Emergency assistance" className="flex flex-col gap-3 border-y py-4 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex items-start gap-3">
+          <span className="mt-0.5 grid size-9 shrink-0 place-items-center rounded-full bg-danger/10 text-danger"><TriangleAlert className="size-4" aria-hidden /></span>
+          <div>
+            <h2 className="font-semibold">Need urgent help?</h2>
+            <p className="mt-0.5 text-sm text-muted-foreground">Send a rescue request to the response team. This demo does not contact emergency services.</p>
           </div>
-          <ul className="space-y-2">
-            {SEED_ALERTS.slice(1).map((a) => <AlertItem key={a.id} alert={a} />)}
-          </ul>
+        </div>
+        <div className="flex shrink-0 flex-wrap gap-2 pl-12 sm:pl-0">
+          <Button asChild className="h-10 bg-danger text-white hover:bg-danger/90"><Link href="/sos">Request rescue</Link></Button>
+          <Button asChild variant="outline" className="h-10"><a href="tel:112"><Phone /> Call 112</a></Button>
         </div>
       </section>
 
-      <p className="border-t pt-4 text-xs leading-relaxed text-muted-foreground">
-        SURAKSHA is running in demonstration mode. Shelters, alerts and road conditions are simulated for Darbhanga and do not reflect a real flood. In a real emergency in India, call <b className="text-foreground">112</b>.
-      </p>
+      <p className="text-xs leading-relaxed text-muted-foreground">Demonstration data for Darbhanga; conditions shown are simulated. For a real emergency in India, call <b className="text-foreground">112</b>.</p>
     </div>
   );
 }
