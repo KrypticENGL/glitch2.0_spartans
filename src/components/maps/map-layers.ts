@@ -65,6 +65,18 @@ export function buildData(p: Props): Record<string, FeatureCollection> {
         }),
       ),
     ),
+    "src-risk": fc(
+      (p.riskObservations ?? []).map((risk) =>
+        feat({ type: "Point", coordinates: [risk.longitude, risk.latitude] }, {
+          id: risk.id,
+          intensity: risk.intensity,
+          level: risk.level,
+          source: risk.source,
+          area: risk.area,
+          selected: sel?.kind === "risk" && sel.id === risk.id,
+        }),
+      ),
+    ),
     "src-routes": fc(
       (p.routes ?? []).map((r) =>
         feat({ type: "LineString", coordinates: r.coordinates }, {
@@ -87,6 +99,14 @@ const routeOpacity = (hasSelection: boolean): ExpressionSpecification | number =
 function layers(hasSelectedRoute: boolean): (AddLayerObject & { group?: MapLayerKey })[] {
   const op = routeOpacity(hasSelectedRoute);
   return [
+    // Native MapLibre kernel-density visualization; point values are relative risk, not flood depth.
+    { id: "risk-heatmap", type: "heatmap", source: "src-risk", group: "risk", paint: {
+      "heatmap-weight": ["get", "intensity"],
+      "heatmap-intensity": ["interpolate", ["linear"], ["zoom"], 8, 0.65, 12, 1.05, 16, 1.45],
+      "heatmap-radius": ["interpolate", ["linear"], ["zoom"], 8, 18, 12, 30, 16, 44],
+      "heatmap-color": ["interpolate", ["linear"], ["heatmap-density"], 0, "rgba(62,173,176,0)", 0.12, "rgba(62,173,176,0.38)", 0.3, "rgba(212,163,59,0.52)", 0.55, "rgba(223,113,57,0.66)", 0.82, "rgba(199,70,60,0.78)"],
+      "heatmap-opacity": 0.66,
+    } },
     // Road conditions
     { id: "roads-casing", type: "line", source: "src-roads", group: "roads", layout: { "line-cap": "round" }, paint: { "line-color": "#ffffff", "line-width": 9, "line-opacity": 0.9 } },
     { id: "roads-line", type: "line", source: "src-roads", group: "roads", paint: { "line-color": ["get", "color"], "line-width": 5, "line-dasharray": [1, 1] } },
@@ -97,6 +117,14 @@ function layers(hasSelectedRoute: boolean): (AddLayerObject & { group?: MapLayer
     { id: "routes-caution", type: "line", source: "src-routes", group: "routes", filter: ["==", ["get", "classification"], "caution"], layout: { "line-join": "round" }, paint: { "line-color": ["get", "color"], "line-width": ["case", ANY_SELECTED_ROUTE, 6, 4], "line-dasharray": [2, 1], "line-opacity": op } },
     { id: "routes-unavailable", type: "line", source: "src-routes", group: "routes", filter: ["==", ["get", "classification"], "unavailable"], layout: { "line-join": "round" }, paint: { "line-color": ["get", "color"], "line-width": ["case", ANY_SELECTED_ROUTE, 5, 3.5], "line-dasharray": [0.8, 1.6], "line-opacity": op } },
     { id: "routes-label", type: "symbol", source: "src-routes", group: "routes", layout: { "symbol-placement": "line-center", "text-field": ["get", "label"], "text-font": FONT_BOLD, "text-size": 12, "text-offset": [0, -1.2], "symbol-sort-key": ["case", ANY_SELECTED_ROUTE, 0, 1] }, paint: { "text-color": ["get", "color"], "text-halo-color": "#ffffff", "text-halo-width": 2, "text-opacity": op } },
+    // Queryable source points stay distinct from the aggregated heatmap pixels.
+    { id: "risk-observations-circle", type: "circle", source: "src-risk", group: "risk", minzoom: 9, paint: {
+      "circle-radius": ["case", ["get", "selected"], 8, 5],
+      "circle-color": ["match", ["get", "level"], "low", "#3fadb0", "moderate", "#d4a33b", "high", "#df7139", "severe", "#c7463c", "#3fadb0"],
+      "circle-opacity": 0.92,
+      "circle-stroke-color": "#ffffff",
+      "circle-stroke-width": ["case", ["get", "selected"], 2.5, 1.5],
+    } },
     // Points
     { id: "hazards-circle", type: "circle", source: "src-hazards", group: "hazards", paint: { "circle-pitch-scale": "viewport", "circle-pitch-alignment": "viewport", "circle-radius": ["case", ["get", "selected"], 10, 7], "circle-color": ["case", ["get", "verified"], TONE_HEX.warn, "#ffffff"], "circle-stroke-color": TONE_HEX.warn, "circle-stroke-width": 2.5 } },
     { id: "hazards-label", type: "symbol", source: "src-hazards", group: "hazards", minzoom: 14, layout: { "text-field": ["get", "label"], "text-font": FONT, "text-size": 11, "text-offset": [0, 1.4], "text-anchor": "top" }, paint: { "text-color": "#7a4f08", "text-halo-color": "#ffffff", "text-halo-width": 1.5 } },
@@ -120,6 +148,7 @@ export const CLICKABLE: Record<string, "shelter" | "incident" | "team" | "hazard
   "incidents-circle": "incident",
   "teams-circle": "team",
   "hazards-circle": "hazard",
+  "risk-observations-circle": "risk",
   "routes-solid": "route",
   "routes-caution": "route",
   "routes-unavailable": "route",
@@ -180,5 +209,6 @@ export function syncLayers(map: MLMap, p: Props) {
       const key = layer.type === "symbol" ? "text-opacity" : "line-opacity";
       map.setPaintProperty(layer.id, key, routeOpacity(hasSel));
     }
+    if (layer.id === "risk-heatmap") map.setPaintProperty(layer.id, "heatmap-opacity", p.riskOpacity ?? 0.66);
   }
 }

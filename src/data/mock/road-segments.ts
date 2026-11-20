@@ -12,9 +12,9 @@ function sliceOf({ shelterId, index, from, to }: RouteRef): LngLat[] {
 }
 
 export const ROAD_SEGMENTS: RoadSegment[] = [
-  { id: "seg-1", name: "Laheriasarai road underpass", condition: "blocked", note: "Underpass submerged; closed to all traffic.", coordinates: sliceOf({ shelterId: "shl-laheriasarai", index: 0, from: 0.45, to: 0.7 }), verified: true },
-  { id: "seg-2", name: "Donar link road", condition: "flooded", note: "Water above 60 cm reported by field team.", coordinates: sliceOf({ shelterId: "shl-donar", index: 0, from: 0.3, to: 0.55 }), verified: true },
-  { id: "seg-3", name: "Kadirabad approach", condition: "caution", note: "Shallow water (about 30 cm); slow vehicles only.", coordinates: sliceOf({ shelterId: "shl-kadirabad", index: 0, from: 0.25, to: 0.5 }), verified: true },
-  { id: "seg-4", name: "Mabbi bypass", condition: "blocked", note: "Embankment breach; road surface washed out.", coordinates: sliceOf({ shelterId: "shl-mabbi", index: 1, from: 0.55, to: 0.8 }), verified: true },
-  { id: "seg-5", name: "Shubhankarpur lane", condition: "caution", note: "Debris on carriageway; single lane passable.", coordinates: sliceOf({ shelterId: "shl-shubhankarpur", index: 0, from: 0.35, to: 0.6 }), verified: false },
+  { id: "seg-1", name: "Laheriasarai road underpass", condition: "blocked", note: "Underpass submerged; closed to all traffic.", coordinates: sliceOf({ shelterId: "shl-laheriasarai", index: 0, from: 0.45, to: 0.7 }), verified: true, reportedAt: "2026-08-14T04:30:00Z" },
+  { id: "seg-2", name: "Donar link road", condition: "flooded", note: "Water above 60 cm reported by field team.", coordinates: sliceOf({ shelterId: "shl-donar", index: 0, from: 0.3, to: 0.55 }), verified: true, reportedAt: "2026-08-14T03:45:00Z" },
+  { id: "seg-3", name: "Kadirabad approach", condition: "caution", note: "Shallow water (about 30 cm); slow vehicles only.", coordinates: sliceOf({ shelterId: "shl-kadirabad", index: 0, from: 0.25, to: 0.5 }), verified: true, reportedAt: "2026-08-14T05:15:00Z" },
+  { id: "seg-4", name: "Mabbi bypass", condition: "blocked", note: "Embankment breach; road surface washed out.", coordinates: sliceOf({ shelterId: "shl-mabbi", index: 1, from: 0.55, to: 0.8 }), verified: true, reportedAt: "2026-08-14T05:00:00Z" },
+  { id: "seg-5", name: "Shubhankarpur lane", condition: "caution", note: "Debris on carriageway; single lane passable.", coordinates: sliceOf({ shelterId: "shl-shubhankarpur", index: 0, from: 0.35, to: 0.6 }), verified: false, reportedAt: "2026-08-14T05:20:00Z" },
 ];

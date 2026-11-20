@@ -1,4 +1,6 @@
 // Domain model for SURAKSHA. Coordinates are always GeoJSON order: [longitude, latitude].
+export * from "./geospatial";
+
 export type LngLat = [lng: number, lat: number];
 
 export interface GeographicLocation {
@@ -36,6 +38,8 @@ export interface RoadSegment {
   note: string;
   coordinates: LngLat[];
   verified: boolean;
+  /** Demonstration observation time; timestamps are fixed to the simulated scenario. */
+  reportedAt?: string;
 }
 
 export type RouteClassification = "recommended" | "alternative" | "caution" | "unavailable";

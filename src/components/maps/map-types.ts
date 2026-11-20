@@ -1,13 +1,14 @@
 import type { HazardReport, Incident, LngLat, RescueTeam, RoadSegment, RouteClassification, Shelter } from "@/types";
+import type { RiskObservation } from "@/types";
 import type { BasemapId } from "@/config/geo";
 
-export type MapEntityKind = "shelter" | "incident" | "team" | "hazard";
+export type MapEntityKind = "shelter" | "incident" | "team" | "hazard" | "risk";
 export interface MapSelection {
   kind: MapEntityKind;
   id: string;
 }
 
-export type MapLayerKey = "shelters" | "incidents" | "teams" | "hazards" | "roads" | "routes";
+export type MapLayerKey = "shelters" | "incidents" | "teams" | "hazards" | "roads" | "routes" | "risk";
 
 export interface MapRoute {
   id: string;
@@ -29,6 +30,8 @@ export interface SurakshaMapProps {
   incidents?: Incident[];
   teams?: RescueTeam[];
   hazards?: HazardReport[];
+  riskObservations?: RiskObservation[];
+  riskOpacity?: number;
   roads?: RoadSegment[];
   routes?: MapRoute[];
   selectedRouteId?: string | null;
